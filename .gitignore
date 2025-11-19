@@ -1,0 +1,224 @@
+#############################
+
+# Java / Spring Boot
+
+#############################
+
+# Compiled class files
+
+*.class
+
+# Log files
+
+*.log
+
+# OS junk
+
+.DS_Store
+
+Thumbs.db
+
+# Spring Boot
+
+target/
+
+out/
+
+build/
+
+!gradle/wrapper/gradle-wrapper.jar
+
+# IntelliJ build output
+
+*.iml
+
+*.ipr
+
+*.iws
+
+#############################
+
+# Maven
+
+#############################
+
+target/
+
+.mvn/wrapper/maven-wrapper.jar
+
+.mvn/wrapper/maven-wrapper.properties
+
+.mvn/wrapper
+
+# Maven local repository (if any)
+
+.mvn/
+
+#############################
+
+# Gradle
+
+#############################
+
+.gradle/
+
+build/
+
+**/build/
+
+# Gradle Wrapper
+
+gradle/wrapper/gradle-wrapper.properties
+
+gradle/wrapper/gradle-wrapper.jar
+
+#############################
+
+# IntelliJ IDEA
+
+#############################
+
+.idea/
+
+*.iml
+
+*.iws
+
+out/
+
+# IntelliJ plugin files
+
+.idea_modules/
+
+.idea/**/workspace.xml
+
+.idea/**/tasks.xml
+
+.idea/**/shelf/
+
+.idea/**/dataSources/
+
+.idea/**/dataSources.local.xml
+
+.idea/**/sqlDataSources.xml
+
+#############################
+
+# Eclipse
+
+#############################
+
+.project
+
+.classpath
+
+.settings/
+
+.bin/
+
+.recommenders/
+
+#############################
+
+# VS Code
+
+#############################
+
+.vscode/
+
+.history/
+
+*.code-workspace
+
+#############################
+
+# macOS files
+
+#############################
+
+.DS_Store
+
+.AppleDouble
+
+.LSOverride
+
+# macOS metadata
+
+._*
+
+# Trash
+
+.Trashes
+
+.Spotlight-V100
+
+.fseventsd
+
+#############################
+
+# Logs & Temp Files
+
+#############################
+
+*.log
+
+*.tmp
+
+*.swp
+
+*.swo
+
+*.bak
+
+#############################
+
+# Environment Variables / Secrets
+
+#############################
+
+# ALWAYS ignore config files with secrets
+
+application.properties
+
+application.yml
+
+.env
+
+*.env
+
+#############################
+
+# Database
+
+#############################
+
+# PostgreSQL local data directory (if you run local DB in project folder)
+
+pgdata/
+
+#############################
+
+# Node/Angular (if frontend is later added)
+
+#############################
+
+node_modules/
+
+dist/
+
+npm-debug.log*
+
+yarn-debug.log*
+
+yarn-error.log*
+
+#############################
+
+# Project-specific
+
+#############################
+
+/uploads/
+
+/generated-reports/
+ 
