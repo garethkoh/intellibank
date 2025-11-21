@@ -34,6 +34,7 @@ IntelliBank Lite follows a client-server architecture:
 * Database: Stores users, accounts, transactions, and audit logs
 
 ## 2.2 Component Diagram
+```plaintext
 Frontend (React)
  ├─ LoginPage.jsx
  ├─ DashboardPage.jsx
@@ -48,14 +49,16 @@ Backend (Spring Boot)
  ├─ DTO Layer (data transfer objects)
  ├─ Security Layer (JWT + role checks)
  ├─ Scheduler Layer (optional background tasks)
- └─ Utils / Mapper / Exception Handling
+ └─ Utils / Config / Exception Handling / Security
 Database (PostgreSQL)
  ├─ Users
  ├─ Accounts
  ├─ Transactions
- ├─ AuditLogs
- └─ Other supporting tables
-
+ ├─ Bank_Transfers
+ ├─ Mobile_Payments
+ ├─ Audit_Logs
+ └─ OTP_Codes
+```
  ## 2.3 Technology Stack
 
 | Layer            | Technology                          |
@@ -67,14 +70,13 @@ Database (PostgreSQL)
 | **Security**     | JWT, Spring Security              |
 | **Containerization** | Docker, Docker Compose        |
 
-TODO
 ## 2.4 Architecture Diagram
+![Architecture Diagram](./images/ArchitectureDiagram.png)
 
 # 3. Database Design
 
-TODO
 ## 3.1 ER Diagram
-![Banking App ER Diagram](docs/images/)
+![ER Diagram](./images/ERDiagram.png)
 
 ## 3.2 Notes
 * Use UUID or bigint for IDs.
@@ -99,8 +101,9 @@ Controller (DTO objects are used) -> Service (Converts DTO to entity) -> Reposit
 
 TODO
 ## 4.2 Class Diagram
+![Class Diagram](./images/ClassDiagram.png)
 
-TODO: money transfer
+TODO: money transfer, login/register flows.
 ## 4.3 Sequence Diagram 
 
 ## 4.4 Notes
@@ -114,7 +117,7 @@ TODO: Use Swagger to automatically generate frontend types that match DTOs
 | `/api/v1/auth/register`        | POST   | `{username, email, password}`  | 201 Created / Error    | Creates new user         |
 | `/api/v1/auth/login`           | POST   | `{username, password}`         | 200 OK + JWT / 401     | Returns JWT              |
 | `/api/v1/auth/forgot-password` | POST   | `{email}`                      | 200 OK                 | Sends reset email        |
-| `/api/v1/auth/reset-password`  | POST   | `{token, newPassword}`         | 200 OK / Error         | Updates password         |
+| `/api/v1/auth/reset-password`  | POST   | `{token, oldPassword, newPassword}`         | 200 OK / Error         | Updates password         |
 
 ## 5.2 Accounts
 | Endpoint                  | Method | Request | Response | Notes                |
@@ -126,10 +129,11 @@ TODO: Use Swagger to automatically generate frontend types that match DTOs
 | Endpoint                  | Method | Request                                   | Response            | Notes                        |
 |---------------------------|--------|-------------------------------------------|---------------------|-----------------------------|
 | `/api/v1/transactions`   | GET    | JWT                                       | List               | User’s transaction history |
-| `/api/v1/transfers`      | POST   | `{fromAccountId, toAccountId, amount}`    | Transaction status | Initiates transfer         |
+| `/api/v1/transfers/bank`      | POST   | `{fromAccountId, toAccountId, amount}`    | Transaction status | Initiates bank transfer         |
+| `/api/v1/transfers/mobile`      | POST   | `{fromAccountId, toMobileNum, amount}`    | Transaction status | Initiates mobile payment         |
 
 ## 5.4 Notes
-* All endpoints requie JWT authentication exceot registration and login.
+* All endpoints requie JWT authentication except registration and login.
 
 * Responses standardized with {status, message, data}.
 
@@ -182,6 +186,7 @@ TODO: Use Swagger to automatically generate frontend types that match DTOs
 | **Portability** | Spring Boot + Docker ensures portability across OS/environments |
 
 # 10. Project Folder structure
+```plaintext
 banking-app/
 ├── backend/
 │   ├── src/main/java/com/app/
@@ -209,7 +214,7 @@ banking-app/
 │   │   └── utils/
 │   └── Dockerfile
 └── docker-compose.yml
- 
+ ```
 
 # 11. Notes / Future Enhancements
 

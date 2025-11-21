@@ -179,8 +179,7 @@ None.
 - `ACCOUNTS`  
 - `TRANSACTIONS`  
 - `AUDIT_LOG`  
-- `OTP_CODES`  
-- `USER_ROLES`  
+- `OTP_CODES`    
 ## 6.2 Constraints
 - Foreign key relationships enforced.  
 - Transaction table stores before/after balance.  
