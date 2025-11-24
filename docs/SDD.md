@@ -99,14 +99,42 @@ Controller (DTO objects are used) -> Service (Converts DTO to entity) -> Reposit
 
 * DTO: Objects for API communication (to avoid exposing entities directly).
 
-TODO
-## 4.2 Class Diagram
+## 4.2 Component Responsibilities
+
+* AuthController: endpoints related to funciontality that requires verification, such as logging in,changing of password, creating a user etc.
+
+* UserController: endpoints for all user related functionality such as updating non-sensitive details and opening new accounts. 
+
+* TransactionController: endpoints related to viewing transaction history and creating payments.
+
+* AuthService: controls access to OTPRepository
+
+* UserService: controls access to UserRepository, AccountRepository
+
+* TransactionService: controls access to TransactionRepository, BankTransferRepository, MobilePaymentRepository
+
+* NotificationService: responsible for the logic behind all kinds of notifications including OTP sending and trasaction confirmation.
+
+
+## 4.3 Class Diagram
 ![Class Diagram](./images/ClassDiagram.png)
 
-TODO: money transfer, login/register flows.
-## 4.3 Sequence Diagram 
+## 4.4 Sequence Diagrams
 
-## 4.4 Notes
+* User registration flow
+
+
+![Registration Sequence Diagram](./images/RegisterSequenceDiagram.png)
+
+* User login flow
+
+![Login Sequence Diagram](./images/LoginSequenceDiagram.png)
+
+* Transaction flow
+
+![Transaction Sequence Diagram](./images/TransferSequenceDiagram.png)
+
+## 4.5 Notes
 TODO: Use Swagger to automatically generate frontend types that match DTOs
 
 # 5. API Design
@@ -115,22 +143,24 @@ TODO: Use Swagger to automatically generate frontend types that match DTOs
 | Endpoint                        | Method | Request                          | Response                | Notes                     |
 |--------------------------------|--------|---------------------------------|-------------------------|---------------------------|
 | `/api/v1/auth/register`        | POST   | `{username, email, password}`  | 201 Created / Error    | Creates new user         |
-| `/api/v1/auth/login`           | POST   | `{username, password}`         | 200 OK + JWT / 401     | Returns JWT              |
+| `/api/v1/auth/login`           | POST   | `{username/email, password}`         | 200 OK + JWT / 401     | Returns JWT              |
 | `/api/v1/auth/forgot-password` | POST   | `{email}`                      | 200 OK                 | Sends reset email        |
 | `/api/v1/auth/reset-password`  | POST   | `{token, oldPassword, newPassword}`         | 200 OK / Error         | Updates password         |
 
-## 5.2 Accounts
-| Endpoint                  | Method | Request | Response | Notes                |
-|---------------------------|--------|---------|----------|-----------------------|
-| `/api/v1/accounts`       | GET    | JWT     | List     | Fetch user accounts  |
-| `/api/v1/accounts/{id}`  | GET    | JWT     | Account  | Fetch single account |
+## 5.2 User
+| Endpoint                        | Method | Request       | Response | Notes                          |
+|--------------------------------|--------|--------------|----------|--------------------------------|
+| `/api/v1/user/accounts`        | GET    | JWT          | List     | Fetch user accounts           |
+| `/api/v1/user/accounts/{id}`   | GET    | JWT          | Account  | Fetch single account          |
+| `/api/v1/user`            | PUT    | JWT + JSON   | User     | Update user details (e.g., name, email) |
+
 
 ## 5.3 Transactions
 | Endpoint                  | Method | Request                                   | Response            | Notes                        |
 |---------------------------|--------|-------------------------------------------|---------------------|-----------------------------|
 | `/api/v1/transactions`   | GET    | JWT                                       | List               | User’s transaction history |
-| `/api/v1/transfers/bank`      | POST   | `{fromAccountId, toAccountId, amount}`    | Transaction status | Initiates bank transfer         |
-| `/api/v1/transfers/mobile`      | POST   | `{fromAccountId, toMobileNum, amount}`    | Transaction status | Initiates mobile payment         |
+| `/api/v1/transactions/bank`      | POST   | `{fromAccountId, toAccountId, amount}`    | Transaction status | Initiates bank transfer         |
+| `/api/v1/transactions/mobile`      | POST   | `{fromAccountId, toMobileNum, amount}`    | Transaction status | Initiates mobile payment         |
 
 ## 5.4 Notes
 * All endpoints requie JWT authentication except registration and login.
