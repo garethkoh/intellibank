@@ -5,22 +5,21 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
+@DiscriminatorValue("BANK")
 @Table(name = "bank_transfer")
 public class BankTransfer extends Transaction{
 
-    @OneToOne
-    @JoinColumn(name = "transaction_id")
-    @JsonBackReference
-    private Transaction transaction;
-
+    @Column(name = "receiver_account_number", nullable = false)
     private Long recipientAccountId;
 
-    // Getters and setters
+    public BankTransfer() {}
 
+    public BankTransfer(Account senderAccount, Account receiverAccount, String recipientName, Double amount, String status, String note, Long recipienctAccountId) {
+        super(senderAccount, receiverAccount, recipientName, amount, status, note);
+        this.recipientAccountId = recipienctAccountId;
+    }
+
+    // Getters and setters
     public Long getRecipientAccountId() { return recipientAccountId; }
     public void setRecipientAccountId(Long accountId) { this.recipientAccountId = accountId; }
-
-    
-    public Transaction getTransaction() { return transaction; }
-    public void setTransaction(Transaction transaction) { this.transaction = transaction; }
 }

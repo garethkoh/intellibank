@@ -29,14 +29,14 @@ public class User {
 	@Column(name="is_verified")
 	public boolean isVerified;
 	
-    // TODO: figure out the annotation for this
-    // TODO: getters and setters, constructor
+    
+    @OneToMany(mappedBy = "user")
     public List<Account> accounts;
-
 
 	@Transient
 	private String password;
 
+    // TODO: getters and setters, constructor
 	//Getter,Setters
 	public int getUserId() {
 		return userId;

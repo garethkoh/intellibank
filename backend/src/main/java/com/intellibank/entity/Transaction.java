@@ -8,22 +8,28 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "transactions")
-public class Transaction {
+@Inheritance(strategy = InheritanceType.JOINED) // or SINGLE_TABLE
+@DiscriminatorColumn(name = "type") // MOBILE or BANK
+public abstract class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long transactionId;
 
-    @Column(name="senderAccountId", nullable = false)
-    private Long senderAccountId;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_account_id", nullable = false)
+    private Account senderAccount;
+
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver_account_id", nullable = false)
+    private Account receiverAccount;
     
     @Column(name="recipientName", nullable = false)
     private String recipientName;
     
     @Column(name="amount", nullable = false)
     private Double amount;
-    
-    @Column(name="type", nullable = false)
-    private String type;		// UPI or BANK
     
     @Column(name="status", nullable = false)
     private String status;		//	PASS or FAIL
@@ -34,32 +40,18 @@ public class Transaction {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
     
-    @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private UpiPayment upiPayment;
 
-    @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private BankTransfer bankTransfer;
+    public Transaction() {}
 
-    // Getters and setters for upiPayment and bankTransfer
-    
-    public UpiPayment getUpiPayment() {
-		return upiPayment;
-	}
-
-	public void setUpiPayment(UpiPayment upiPayment) {
-		this.upiPayment = upiPayment;
-	}
-
-	public BankTransfer getBankTransfer() {
-		return bankTransfer;
-	}
-
-	public void setBankTransfer(BankTransfer bankTransfer) {
-		this.bankTransfer = bankTransfer;
-	}
-
+    public Transaction(Account senderAccount, Account receiverAccount, String recipientName, Double Amount, String status, String note) {
+        this.senderAccount = senderAccount;
+        this.receiverAccount = receiverAccount;
+        this.recipientName = recipientName;
+        this.amount = amount;
+        this.status = status;
+        this.note = note;
+        this.timestamp = LocalDateTime.now();
+    }
     // Getters and Setters
 
     public Long getTransactionId() {
@@ -70,12 +62,20 @@ public class Transaction {
         this.transactionId = transactionId;
     }
     
-    public Long getSenderAccountId() {
-        return senderAccountId;
+    public Long getReceiverAccount() {
+        return receiverAccount;
     }
 
-    public void setSenderAccountId(Long senderAccountId) {
-        this.senderAccountId = senderAccountId;
+    public void setReceiverAccountId(Account receiverAccount) {
+        this.receiverAccount = receiverAccount;
+    }
+
+    public Long getSenderAccount() {
+        return senderAccount;
+    }
+
+    public void setSenderAccount(Account senderAccount) {
+        this.senderAccount = senderAccount;
     }
 
     public Long getRecipientName() {
@@ -99,8 +99,8 @@ public class Transaction {
     }
 
     public void setType(String type) {
-        if (!type.equals("UPI") && !type.equals("BANK")) {
-            throw new IllegalArgumentException("Transaction type must be 'UPI' or 'BANK'");
+        if (!type.equals("MOBILE") && !type.equals("BANK")) {
+            throw new IllegalArgumentException("Transaction type must be 'MOBILE' or 'BANK'");
         }
         this.type = type;
     }
