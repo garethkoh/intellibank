@@ -118,6 +118,8 @@ out/
 
 .recommenders/
 
+.metadata/
+
 #############################
 
 # VS Code
