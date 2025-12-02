@@ -1,5 +1,6 @@
 package com.intellibank.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -38,12 +39,12 @@ public abstract class Transaction {
     private String note;
     
     @Temporal(TemporalType.TIMESTAMP)
-    private Date timestamp;
+    private LocalDateTime timestamp;
     
 
     public Transaction() {}
 
-    public Transaction(Account senderAccount, Account receiverAccount, String recipientName, Double Amount, String status, String note) {
+    public Transaction(Account senderAccount, Account receiverAccount, String recipientName, Double amount, String status, String note) {
         this.senderAccount = senderAccount;
         this.receiverAccount = receiverAccount;
         this.recipientName = recipientName;
@@ -62,7 +63,7 @@ public abstract class Transaction {
         this.transactionId = transactionId;
     }
     
-    public Long getReceiverAccount() {
+    public Account getReceiverAccount() {
         return receiverAccount;
     }
 
@@ -70,7 +71,7 @@ public abstract class Transaction {
         this.receiverAccount = receiverAccount;
     }
 
-    public Long getSenderAccount() {
+    public Account getSenderAccount() {
         return senderAccount;
     }
 
@@ -78,7 +79,7 @@ public abstract class Transaction {
         this.senderAccount = senderAccount;
     }
 
-    public Long getRecipientName() {
+    public String getRecipientName() {
         return recipientName;
     }
 
@@ -94,16 +95,6 @@ public abstract class Transaction {
         this.amount = amount;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        if (!type.equals("MOBILE") && !type.equals("BANK")) {
-            throw new IllegalArgumentException("Transaction type must be 'MOBILE' or 'BANK'");
-        }
-        this.type = type;
-    }
 
     public String getStatus() {
         return status;
@@ -124,11 +115,11 @@ public abstract class Transaction {
         this.note = note;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 }

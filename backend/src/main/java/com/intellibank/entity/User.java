@@ -9,7 +9,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public int userId;
+	public long userId;
 	
 	@Column(name="name")
 	public String name;
@@ -38,10 +38,10 @@ public class User {
 
     // TODO: getters and setters, constructor
 	//Getter,Setters
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 	public String getName() {

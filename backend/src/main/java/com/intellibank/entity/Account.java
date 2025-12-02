@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
-import com.profileManagement.entities.User;
+import com.intellibank.entity.User;
 
 @Entity
 @Table(name="accounts")
@@ -47,7 +47,7 @@ public class Account {
 	public Account() {}
 
 	
-	public Integer getAccountUserId() {
+	public Long getAccountUserId() {
 	    return user != null ? user.getUserId() : null;
 	}
 	

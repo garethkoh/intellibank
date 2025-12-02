@@ -1,7 +1,5 @@
 package com.intellibank.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -19,6 +17,6 @@ public class MobilePayment extends Transaction {
         this.recipientMobileNumber = mobileNumber;
     }
     // Getters and setters
-    public Long getRecipientMobileNumber() { return recipientMobileNumber; }
+    public String getRecipientMobileNumber() { return recipientMobileNumber; }
     public void setRecipientMobileNumber(String mobileNumber) { this.recipientMobileNumber = mobileNumber; }
 }
