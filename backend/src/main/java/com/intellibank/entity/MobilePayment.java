@@ -17,6 +17,10 @@ public class MobilePayment extends Transaction {
         this.recipientMobileNumber = mobileNumber;
     }
     // Getters and setters
-    public String getRecipientMobileNumber() { return recipientMobileNumber; }
-    public void setRecipientMobileNumber(String mobileNumber) { this.recipientMobileNumber = mobileNumber; }
+    public String getRecipientMobileNumber() { 
+    	return recipientMobileNumber; 
+    }
+    public void setRecipientMobileNumber(String mobileNumber) { 
+    	this.recipientMobileNumber = mobileNumber;
+    }
 }
